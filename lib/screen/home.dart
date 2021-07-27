@@ -1,3 +1,4 @@
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
@@ -237,6 +238,23 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: ConvexAppBar(
+        style: TabStyle.react,
+        backgroundColor: lightFog,
+        activeColor: deepBlue,
+        color: lightPurple,
+        initialActiveIndex: 0,
+        items: [
+          TabItem(
+            icon: Icons.calculate_rounded,
+            title: '計算',
+          ),
+          TabItem(
+            icon: Icons.settings_rounded,
+            title: '設定',
+          ),
+        ],
       ),
     );
   }
