@@ -8,6 +8,7 @@ final MaterialColor fog = createColor(0xffE7EFF9);
 
 /* Blue */
 final MaterialColor sky = createColor(0xFF7CC7E8);
+final MaterialColor lightPurple = createColor(0xFF93A5CE);
 
 /* Red */
 final MaterialColor pink = createColor(0xFFF19DB5);
