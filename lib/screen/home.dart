@@ -142,30 +142,31 @@ class HomeScreen extends StatelessWidget {
                           vertical: 5,
                           horizontal: 24,
                         ),
-                        child: Container(
-                          height: _btnHeight,
-                          width: _btnWidth,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Color.fromRGBO(255, 255, 255, .5),
-                          ),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              clearText();
-                              context.read(expectedValueProvider).resetValue();
-                            },
-                            child: Text(
-                              'リセット',
-                              style: TextStyle(
-                                fontSize: _btnFontSize,
-                                color: _textColor,
+                        child: InkWell(
+                          customBorder: StadiumBorder(),
+                          radius: 100,
+                          splashColor: lightPurple,
+                          child: Container(
+                            height: _btnHeight,
+                            width: _btnWidth,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Color.fromRGBO(255, 255, 255, .5),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'リセット',
+                                style: TextStyle(
+                                  fontSize: _btnFontSize,
+                                  color: _textColor,
+                                ),
                               ),
                             ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.transparent,
-                              elevation: 0,
-                            ),
                           ),
+                          onTap: () {
+                            clearText();
+                            context.read(expectedValueProvider).resetValue();
+                          },
                         ),
                       ),
                       Padding(
@@ -173,35 +174,36 @@ class HomeScreen extends StatelessWidget {
                           vertical: 40,
                           horizontal: 24,
                         ),
-                        child: Container(
-                          height: _btnHeight,
-                          width: _btnWidth,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Color.fromRGBO(255, 255, 255, .5),
-                          ),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              int interval = int.parse(intervalController.value.text);
-                              int prob = int.parse(probController.value.text);
-                              int time = int.parse(timeController.value.text);
-                              int incr = int.parse(incrController.value.text);
-                              context
-                                  .read(expectedValueProvider)
-                                  .calculate(interval, prob, time, incr);
-                            },
-                            child: Text(
-                              '計算する',
-                              style: TextStyle(
-                                fontSize: _btnFontSize,
-                                color: _textColor,
+                        child: InkWell(
+                          customBorder: StadiumBorder(),
+                          radius: 100,
+                          splashColor: lightPurple,
+                          child: Container(
+                            height: _btnHeight,
+                            width: _btnWidth,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Color.fromRGBO(255, 255, 255, .5),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '計算する',
+                                style: TextStyle(
+                                  fontSize: _btnFontSize,
+                                  color: _textColor,
+                                ),
                               ),
                             ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.transparent,
-                              elevation: 0,
-                            ),
                           ),
+                          onTap: () {
+                            int interval = int.parse(intervalController.value.text);
+                            int prob = int.parse(probController.value.text);
+                            int time = int.parse(timeController.value.text);
+                            int incr = int.parse(incrController.value.text);
+                            context
+                                .read(expectedValueProvider)
+                                .calculate(interval, prob, time, incr);
+                          },
                         ),
                       ),
                     ],
