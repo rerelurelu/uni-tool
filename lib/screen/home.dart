@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
+
 import 'package:uni_tool/layout/color.dart';
-
-import 'package:uni_tool/model/calculate_model.dart';
+import 'package:uni_tool/provider/calculate_provider.dart';
 import 'package:uni_tool/layout/theme.dart';
-
-final expectedValueProvider = ChangeNotifierProvider(
-  (ref) => CalculateModel(),
-);
 
 class HomeScreen extends StatelessWidget {
   final double _btnHeight = 50;
@@ -43,25 +39,47 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: 100),
                   Consumer(builder: (context, watch, child) {
-                    return Container(
-                      height: 80,
-                      width: 300,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Color.fromRGBO(255, 255, 255, .5),
-                      ),
-                      child: Center(
-                        child: Text(
-                          watch(expectedValueProvider).getExvalue + '％',
-                          style: TextStyle(
-                            color: lightTeal,
-                            fontSize: 32,
+                    final calulator = watch(expectedValueProvider);
+
+                    return Center(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 80,
+                            width: 300,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color.fromRGBO(255, 255, 255, .5),
+                            ),
+                            child: Center(
+                              child: Text(
+                                calulator.expectedValue + '％',
+                                style: TextStyle(
+                                  color: lightTeal,
+                                  fontSize: 32,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          calulator.hasError
+                              ? Column(
+                                  children: [
+                                    SizedBox(height: 25),
+                                    Container(
+                                      child: Text(
+                                        calulator.errorText,
+                                        style: TextStyle(
+                                          color: Colors.redAccent.shade700,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(height: 32),
+                        ],
                       ),
                     );
                   }),
-                  SizedBox(height: 32),
                   Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: _formVertical,
@@ -166,6 +184,7 @@ class HomeScreen extends StatelessWidget {
                           onTap: () {
                             clearText();
                             context.read(expectedValueProvider).resetValue();
+                            context.read(expectedValueProvider).changeHasError(false);
                           },
                         ),
                       ),
@@ -196,13 +215,18 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           onTap: () {
-                            int interval = int.parse(intervalController.value.text);
-                            int prob = int.parse(probController.value.text);
-                            int time = int.parse(timeController.value.text);
-                            int incr = int.parse(incrController.value.text);
-                            context
-                                .read(expectedValueProvider)
-                                .calculate(interval, prob, time, incr);
+                            try {
+                              int interval = int.parse(intervalController.value.text);
+                              int prob = int.parse(probController.value.text);
+                              int time = int.parse(timeController.value.text);
+                              int incr = int.parse(incrController.value.text);
+                              context
+                                  .read(expectedValueProvider)
+                                  .calculate(interval, prob, time, incr);
+                              context.read(expectedValueProvider).changeHasError(false);
+                            } on FormatException {
+                              context.read(expectedValueProvider).changeHasError(true);
+                            }
                           },
                         ),
                       ),

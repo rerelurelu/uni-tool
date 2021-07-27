@@ -17,6 +17,7 @@ dependencies:
   flutter_riverpod: ^0.14.0+3
   keyboard_actions: 3.4.0
   touch_ripple_effect: ^2.1.3
+  convex_bottom_bar: ^3.0.0
 
 dev_dependencies:
   flutter_test:
