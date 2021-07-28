@@ -241,10 +241,11 @@ class HomeScreen extends StatelessWidget {
       ),
       bottomNavigationBar: ConvexAppBar(
         style: TabStyle.react,
-        backgroundColor: lightFog,
+        backgroundColor: fog,
         activeColor: deepBlue,
         color: lightPurple,
         initialActiveIndex: 0,
+        elevation: 1,
         items: [
           TabItem(
             icon: Icons.calculate_rounded,
