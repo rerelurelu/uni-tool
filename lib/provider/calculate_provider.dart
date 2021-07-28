@@ -16,7 +16,7 @@ class Calculate extends ChangeNotifier {
   bool hasError = false;
   bool get getHasError => hasError;
 
-  void calculate(int interval, int prob, int time, int incr) {
+  void calculateScoreMode(int interval, int prob, int time, int incr) {
     /*
      * incr -> スコア○％アップ
      * prob -> ○％の確率で
@@ -25,6 +25,22 @@ class Calculate extends ChangeNotifier {
      */
     double result =
         incr * (prob / 100 * time) / ((interval + time) * prob / 100 + interval * (1 - prob / 100));
+
+    expectedValue = result.toStringAsFixed(2);
+    notifyListeners();
+  }
+
+  void calculateComboMode(int interval, int prob, int time, int incr) {
+    /*
+     * incr -> スコア○％アップ
+     * prob -> ○％の確率で
+     * interval -> ○秒おきに
+     * time -> ○秒間
+     */
+    double result = (1 / 3) *
+        incr *
+        (prob / 100 * time) /
+        ((interval + time) * prob / 100 + interval * (1 - prob / 100));
 
     expectedValue = result.toStringAsFixed(2);
     notifyListeners();
