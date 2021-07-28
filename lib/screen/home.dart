@@ -1,13 +1,15 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 import 'package:uni_tool/layout/color.dart';
-import 'package:uni_tool/provider/calculate_provider.dart';
 import 'package:uni_tool/layout/theme.dart';
+import 'package:uni_tool/provider/calculate_provider.dart';
+import 'package:uni_tool/provider/change_mode_provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   final double _btnHeight = 50;
   final double _btnWidth = 100;
   final double _btnFontSize = 16;
@@ -27,7 +29,10 @@ class HomeScreen extends StatelessWidget {
   final TextEditingController intervalController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
 
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
+    final calculator = watch(expectedValueProvider);
+    final calculatorMode = watch(changeModeProvider);
+
     return Scaffold(
       body: Container(
         decoration: defaultColor,
@@ -35,206 +40,214 @@ class HomeScreen extends StatelessWidget {
           config: _keyboardActionConfig,
           tapOutsideToDismiss: false,
           child: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                children: [
-                  SizedBox(height: 100),
-                  Consumer(builder: (context, watch, child) {
-                    final calulator = watch(expectedValueProvider);
-
-                    return Center(
-                      child: Column(
+            child: Column(
+              children: [
+                SizedBox(height: 100),
+                FlutterSwitch(
+                  activeText: 'Score Mode',
+                  inactiveText: 'Combo Mode',
+                  valueFontSize: 18,
+                  width: 150,
+                  borderRadius: 30,
+                  showOnOff: true,
+                  value: calculatorMode.isScoreMode,
+                  activeColor: sky,
+                  inactiveColor: pink,
+                  onToggle: (value) {
+                    calculatorMode.changeMode();
+                    clearText();
+                  },
+                ),
+                SizedBox(height: 30),
+                Container(
+                  height: 80,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromRGBO(255, 255, 255, .5),
+                  ),
+                  child: Center(
+                    child: Text(
+                      calculator.expectedValue + '％',
+                      style: TextStyle(
+                        color: lightTeal,
+                        fontSize: 32,
+                      ),
+                    ),
+                  ),
+                ),
+                calculator.hasError
+                    ? Column(
                         children: [
+                          SizedBox(height: 25),
                           Container(
-                            height: 80,
-                            width: 300,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color.fromRGBO(255, 255, 255, .5),
-                            ),
-                            child: Center(
-                              child: Text(
-                                calulator.expectedValue + '％',
-                                style: TextStyle(
-                                  color: lightTeal,
-                                  fontSize: 32,
-                                ),
+                            child: Text(
+                              calculator.errorText,
+                              style: TextStyle(
+                                color: Colors.redAccent.shade700,
                               ),
                             ),
                           ),
-                          calulator.hasError
-                              ? Column(
-                                  children: [
-                                    SizedBox(height: 25),
-                                    Container(
-                                      child: Text(
-                                        calulator.errorText,
-                                        style: TextStyle(
-                                          color: Colors.redAccent.shade700,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : SizedBox(height: 32),
                         ],
-                      ),
-                    );
-                  }),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: _formVertical,
-                      horizontal: _formHorizontal,
+                      )
+                    : SizedBox(height: 32),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: _formVertical,
+                    horizontal: _formHorizontal,
+                  ),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: '○秒おきに',
                     ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: '○秒おきに',
-                      ),
-                      focusNode: _textNode1,
-                      controller: intervalController,
-                      style: TextStyle(
-                        color: _formTextColor,
-                        fontSize: _formFontSize,
-                      ),
+                    focusNode: _textNode1,
+                    controller: intervalController,
+                    style: TextStyle(
+                      color: _formTextColor,
+                      fontSize: _formFontSize,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: _formVertical,
-                      horizontal: _formHorizontal,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: _formVertical,
+                    horizontal: _formHorizontal,
+                  ),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: '○％の確率で',
                     ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: '○％の確率で',
-                      ),
-                      focusNode: _textNode2,
-                      controller: probController,
-                      style: TextStyle(
-                        color: _formTextColor,
-                        fontSize: _formFontSize,
-                      ),
+                    focusNode: _textNode2,
+                    controller: probController,
+                    style: TextStyle(
+                      color: _formTextColor,
+                      fontSize: _formFontSize,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: _formVertical,
-                      horizontal: _formHorizontal,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: _formVertical,
+                    horizontal: _formHorizontal,
+                  ),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: '○秒間',
                     ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: '○秒間',
-                      ),
-                      focusNode: _textNode3,
-                      controller: timeController,
-                      style: TextStyle(
-                        color: _formTextColor,
-                        fontSize: _formFontSize,
-                      ),
+                    focusNode: _textNode3,
+                    controller: timeController,
+                    style: TextStyle(
+                      color: _formTextColor,
+                      fontSize: _formFontSize,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: _formVertical,
-                      horizontal: _formHorizontal,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: _formVertical,
+                    horizontal: _formHorizontal,
+                  ),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: calculatorMode.isScoreMode ? 'スコア○％アップ' : 'コンボボーナス○％アップ',
                     ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: 'スコア○％アップ',
-                      ),
-                      focusNode: _textNode4,
-                      controller: incrController,
-                      style: TextStyle(
-                        color: _formTextColor,
-                        fontSize: _formFontSize,
-                      ),
+                    focusNode: _textNode4,
+                    controller: incrController,
+                    style: TextStyle(
+                      color: _formTextColor,
+                      fontSize: _formFontSize,
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 5,
-                          horizontal: 24,
-                        ),
-                        child: InkWell(
-                          customBorder: StadiumBorder(),
-                          radius: 100,
-                          splashColor: lightPurple,
-                          child: Container(
-                            height: _btnHeight,
-                            width: _btnWidth,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Color.fromRGBO(255, 255, 255, .5),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'リセット',
-                                style: TextStyle(
-                                  fontSize: _btnFontSize,
-                                  color: _textColor,
-                                ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5,
+                        horizontal: 24,
+                      ),
+                      child: InkWell(
+                        customBorder: StadiumBorder(),
+                        radius: 100,
+                        splashColor: lightPurple,
+                        child: Container(
+                          height: _btnHeight,
+                          width: _btnWidth,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Color.fromRGBO(255, 255, 255, .5),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'リセット',
+                              style: TextStyle(
+                                fontSize: _btnFontSize,
+                                color: _textColor,
                               ),
                             ),
                           ),
-                          onTap: () {
-                            clearText();
-                            context.read(expectedValueProvider).resetValue();
-                            context.read(expectedValueProvider).changeHasError(false);
-                          },
                         ),
+                        onTap: () {
+                          clearText();
+                          calculator.resetValue();
+                          calculator.changeHasError(false);
+                        },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 40,
-                          horizontal: 24,
-                        ),
-                        child: InkWell(
-                          customBorder: StadiumBorder(),
-                          radius: 100,
-                          splashColor: lightPurple,
-                          child: Container(
-                            height: _btnHeight,
-                            width: _btnWidth,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Color.fromRGBO(255, 255, 255, .5),
-                            ),
-                            child: Center(
-                              child: Text(
-                                '計算する',
-                                style: TextStyle(
-                                  fontSize: _btnFontSize,
-                                  color: _textColor,
-                                ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 40,
+                        horizontal: 24,
+                      ),
+                      child: InkWell(
+                        customBorder: StadiumBorder(),
+                        radius: 100,
+                        splashColor: lightPurple,
+                        child: Container(
+                          height: _btnHeight,
+                          width: _btnWidth,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Color.fromRGBO(255, 255, 255, .5),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '計算する',
+                              style: TextStyle(
+                                fontSize: _btnFontSize,
+                                color: _textColor,
                               ),
                             ),
                           ),
-                          onTap: () {
-                            try {
-                              int interval = int.parse(intervalController.value.text);
-                              int prob = int.parse(probController.value.text);
-                              int time = int.parse(timeController.value.text);
-                              int incr = int.parse(incrController.value.text);
-                              context
-                                  .read(expectedValueProvider)
-                                  .calculate(interval, prob, time, incr);
-                              context.read(expectedValueProvider).changeHasError(false);
-                            } on FormatException {
-                              context.read(expectedValueProvider).changeHasError(true);
+                        ),
+                        onTap: () {
+                          try {
+                            int interval = int.parse(intervalController.value.text);
+                            int prob = int.parse(probController.value.text);
+                            int time = int.parse(timeController.value.text);
+                            int incr = int.parse(incrController.value.text);
+
+                            if (calculatorMode.isScoreMode) {
+                              calculator.calculateScoreMode(interval, prob, time, incr);
+                            } else {
+                              calculator.calculateComboMode(interval, prob, time, incr);
                             }
-                          },
-                        ),
+
+                            calculator.changeHasError(false);
+                          } on FormatException {
+                            calculator.changeHasError(true);
+                          }
+                        },
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -253,7 +266,7 @@ class HomeScreen extends StatelessWidget {
           ),
           TabItem(
             icon: Icons.settings_rounded,
-            title: '設定',
+            title: 'システム',
           ),
         ],
       ),
