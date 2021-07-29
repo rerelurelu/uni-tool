@@ -1,21 +1,27 @@
 PODS:
   - Flutter (1.0.0)
-  - touch_ripple_effect (0.0.1):
+  - package_info (0.0.1):
+    - Flutter
+  - url_launcher (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - touch_ripple_effect (from `.symlinks/plugins/touch_ripple_effect/ios`)
+  - package_info (from `.symlinks/plugins/package_info/ios`)
+  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  touch_ripple_effect:
-    :path: ".symlinks/plugins/touch_ripple_effect/ios"
+  package_info:
+    :path: ".symlinks/plugins/package_info/ios"
+  url_launcher:
+    :path: ".symlinks/plugins/url_launcher/ios"
 
 SPEC CHECKSUMS:
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  touch_ripple_effect: 5b850cbec069237959ef95e7e81e7ee7f934ac76
+  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
+  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
 
 PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
 
