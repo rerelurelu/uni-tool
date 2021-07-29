@@ -43,15 +43,15 @@ class calculatorScreen extends ConsumerWidget {
               children: [
                 SizedBox(height: 100),
                 FlutterSwitch(
-                  activeText: 'Score Mode',
-                  inactiveText: 'Combo Mode',
-                  valueFontSize: 18,
-                  width: 150,
+                  activeText: 'スコア',
+                  inactiveText: 'コンボ',
+                  valueFontSize: 17,
+                  width: 110,
                   borderRadius: 30,
                   showOnOff: true,
                   value: calculatorMode.isScoreMode,
-                  activeColor: sky,
-                  inactiveColor: pink,
+                  activeColor: lapis,
+                  inactiveColor: coral,
                   onToggle: (value) {
                     calculatorMode.changeMode();
                     clearText();
