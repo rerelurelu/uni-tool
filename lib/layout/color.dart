@@ -10,9 +10,11 @@ final MaterialColor fog = createColor(0xFFE7EFF9);
 final MaterialColor sky = createColor(0xFF7CC7E8);
 final MaterialColor lightPurple = createColor(0xFF93A5CE);
 final MaterialColor deepBlue = createColor(0xFF274060);
+final MaterialColor lapis = createColor(0xFF556DAC);
 
 /* Red */
 final MaterialColor pink = createColor(0xFFF19DB5);
+final MaterialColor coral = createColor(0xFFED8C72);
 
 /* Green */
 final MaterialColor emerald = createColor(0xFF67B7B2);
