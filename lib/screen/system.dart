@@ -7,8 +7,6 @@ import 'package:uni_tool/provider/get_app_version_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SystemScreen extends ConsumerWidget {
-  final _url = 'https://zaw.vercel.app/policy/';
-
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final appVersion = watch(getAppVersionProvider).data?.value;
@@ -38,7 +36,6 @@ class SystemScreen extends ConsumerWidget {
                     title: const Text('バージョン'),
                     trailing: Text(appVersion ?? 'Unknown'),
                   ),
-                  onTap: () {},
                 ),
                 dividerPadding(),
                 InkWell(
@@ -47,7 +44,9 @@ class SystemScreen extends ConsumerWidget {
                     title: const Text('アプリの使い方'),
                     trailing: const Icon(Icons.arrow_forward_ios_rounded),
                   ),
-                  onTap: launchURL,
+                  onTap: () {
+                    launchHowToUseURL(context);
+                  },
                 ),
                 dividerPadding(),
                 InkWell(
@@ -56,7 +55,9 @@ class SystemScreen extends ConsumerWidget {
                     title: const Text('プライバシーポリシー'),
                     trailing: const Icon(Icons.arrow_forward_ios_rounded),
                   ),
-                  onTap: launchURL,
+                  onTap: () {
+                    launchPolicyURL(context);
+                  },
                 ),
               ],
             ),
@@ -76,5 +77,54 @@ class SystemScreen extends ConsumerWidget {
     );
   }
 
-  void launchURL() async => await canLaunch(_url) ? await launch(_url) : throw '$_urlを開けませんでした';
+  void launchPolicyURL(BuildContext context) async {
+    final _url = 'https://www.zaw.icu/policy';
+    if (await canLaunch(_url)) {
+      await launch(_url);
+    } else {
+      return showAlertDialog(context, _url);
+    }
+  }
+
+  void launchHowToUseURL(BuildContext context) async {
+    final _url = 'https://zaw.vercel.app/policy';
+    if (await canLaunch(_url)) {
+      await launch(_url);
+    } else {
+      return showAlertDialog(context, _url);
+    }
+  }
+
+  void showAlertDialog(BuildContext context, String url) {
+    Widget closeButton = TextButton(
+      child: Text('閉じる'),
+      style: TextButton.styleFrom(
+        primary: Colors.blue,
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text(
+        'Sorry!',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 24),
+      ),
+      content: Text(
+        '$url を開けませんでした',
+        textAlign: TextAlign.center,
+      ),
+      actions: [
+        closeButton,
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        });
+  }
 }
