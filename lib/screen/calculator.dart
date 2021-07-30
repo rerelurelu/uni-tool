@@ -7,17 +7,9 @@ import 'package:uni_tool/layout/color.dart';
 import 'package:uni_tool/layout/theme.dart';
 import 'package:uni_tool/provider/calculate_provider.dart';
 import 'package:uni_tool/provider/change_mode_provider.dart';
+import '../layout/global.dart';
 
 class calculatorScreen extends ConsumerWidget {
-  final double _btnHeight = 50;
-  final double _btnWidth = 100;
-  final double _btnFontSize = 16;
-  final double _formVertical = 12;
-  final double _formHorizontal = 30;
-  final Color _textColor = teal;
-  final Color _formTextColor = sumi;
-  final double _formFontSize = 18;
-
   final FocusNode _textNode1 = FocusNode();
   final FocusNode _textNode2 = FocusNode();
   final FocusNode _textNode3 = FocusNode();
@@ -29,6 +21,19 @@ class calculatorScreen extends ConsumerWidget {
   final TextEditingController timeController = TextEditingController();
 
   Widget build(BuildContext context, ScopedReader watch) {
+    final double deviceHeight = MediaQuery.of(context).size.height;
+    final double deviceWidth = MediaQuery.of(context).size.width;
+
+    /* Widget sizes */
+    final double _formVertical = deviceHeight * 0.015;
+    final double _formHorizontal = deviceWidth * 0.08;
+    final double _btnFontSize = 16;
+
+    final double _btnHeight =
+        deviceHeight > deviceWidth ? deviceHeight * 0.06 : deviceHeight * 0.15;
+    final double _btnWidth = deviceHeight > deviceWidth ? deviceWidth * 0.3 : deviceHeight * 0.5;
+
+    /* Providers */
     final calculator = watch(expectedValueProvider);
     final calculatorMode = watch(changeModeProvider);
 
@@ -87,8 +92,8 @@ class calculatorScreen extends ConsumerWidget {
                           Text(
                             '計算モード',
                             style: TextStyle(
-                              color: _textColor,
-                              fontSize: _formFontSize,
+                              color: textColor,
+                              fontSize: formFontSize,
                             ),
                           ),
                           FlutterSwitch(
@@ -130,8 +135,8 @@ class calculatorScreen extends ConsumerWidget {
                     focusNode: _textNode1,
                     controller: intervalController,
                     style: TextStyle(
-                      color: _formTextColor,
-                      fontSize: _formFontSize,
+                      color: formTextColor,
+                      fontSize: formFontSize,
                     ),
                   ),
                 ),
@@ -148,8 +153,8 @@ class calculatorScreen extends ConsumerWidget {
                     focusNode: _textNode2,
                     controller: probController,
                     style: TextStyle(
-                      color: _formTextColor,
-                      fontSize: _formFontSize,
+                      color: formTextColor,
+                      fontSize: formFontSize,
                     ),
                   ),
                 ),
@@ -166,8 +171,8 @@ class calculatorScreen extends ConsumerWidget {
                     focusNode: _textNode3,
                     controller: timeController,
                     style: TextStyle(
-                      color: _formTextColor,
-                      fontSize: _formFontSize,
+                      color: formTextColor,
+                      fontSize: formFontSize,
                     ),
                   ),
                 ),
@@ -184,8 +189,8 @@ class calculatorScreen extends ConsumerWidget {
                     focusNode: _textNode4,
                     controller: incrController,
                     style: TextStyle(
-                      color: _formTextColor,
-                      fontSize: _formFontSize,
+                      color: formTextColor,
+                      fontSize: formFontSize,
                     ),
                   ),
                 ),
@@ -213,7 +218,7 @@ class calculatorScreen extends ConsumerWidget {
                               'リセット',
                               style: TextStyle(
                                 fontSize: _btnFontSize,
-                                color: _textColor,
+                                color: textColor,
                               ),
                             ),
                           ),
@@ -246,7 +251,7 @@ class calculatorScreen extends ConsumerWidget {
                               '計算する',
                               style: TextStyle(
                                 fontSize: _btnFontSize,
-                                color: _textColor,
+                                color: textColor,
                               ),
                             ),
                           ),
