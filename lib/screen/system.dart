@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:uni_tool/layout/color.dart';
+import 'package:uni_tool/layout/global.dart';
 import 'package:uni_tool/layout/theme.dart';
 import 'package:uni_tool/provider/get_app_version_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,9 +20,12 @@ class SystemScreen extends ConsumerWidget {
           const SizedBox(height: 80),
           Padding(
             padding: const EdgeInsets.only(left: 5),
-            child: const Text(
+            child: Text(
               'アプリについて',
-              style: TextStyle(fontSize: 24),
+              style: TextStyle(
+                fontSize: 24,
+                color: textColor,
+              ),
             ),
           ),
           const SizedBox(height: 8),
@@ -33,16 +37,28 @@ class SystemScreen extends ConsumerWidget {
                 InkWell(
                   splashColor: lightFog,
                   child: ListTile(
-                    title: const Text('バージョン'),
-                    trailing: Text(appVersion ?? 'Unknown'),
+                    title: Text(
+                      'バージョン',
+                      style: TextStyle(color: textColor),
+                    ),
+                    trailing: Text(
+                      appVersion ?? 'Unknown',
+                      style: TextStyle(color: textColor),
+                    ),
                   ),
                 ),
                 dividerPadding(),
                 InkWell(
                   splashColor: lightFog,
-                  child: const ListTile(
-                    title: const Text('アプリの使い方'),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                  child: ListTile(
+                    title: Text(
+                      'アプリの使い方',
+                      style: TextStyle(color: textColor),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: textColor,
+                    ),
                   ),
                   onTap: () {
                     launchHowToUseURL(context);
@@ -51,9 +67,12 @@ class SystemScreen extends ConsumerWidget {
                 dividerPadding(),
                 InkWell(
                   splashColor: lightFog,
-                  child: const ListTile(
-                    title: const Text('プライバシーポリシー'),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                  child: ListTile(
+                    title: Text(
+                      'プライバシーポリシー',
+                      style: TextStyle(color: textColor),
+                    ),
+                    trailing: Icon(Icons.arrow_forward_ios_rounded, color: textColor),
                   ),
                   onTap: () {
                     launchPolicyURL(context);
