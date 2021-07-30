@@ -42,22 +42,6 @@ class calculatorScreen extends ConsumerWidget {
             child: Column(
               children: [
                 SizedBox(height: 100),
-                FlutterSwitch(
-                  activeText: 'スコア',
-                  inactiveText: 'コンボ',
-                  valueFontSize: 17,
-                  width: 110,
-                  borderRadius: 30,
-                  showOnOff: true,
-                  value: calculatorMode.isScoreMode,
-                  activeColor: lapis,
-                  inactiveColor: coral,
-                  onToggle: (value) {
-                    calculatorMode.changeMode();
-                    clearText();
-                  },
-                ),
-                SizedBox(height: 30),
                 Container(
                   height: 80,
                   width: 300,
@@ -90,6 +74,49 @@ class calculatorScreen extends ConsumerWidget {
                         ],
                       )
                     : SizedBox(height: 32),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: _formVertical,
+                    horizontal: _formHorizontal,
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '計算モード',
+                            style: TextStyle(
+                              color: _textColor,
+                              fontSize: _formFontSize,
+                            ),
+                          ),
+                          FlutterSwitch(
+                            activeText: 'スコア',
+                            inactiveText: 'コンボ',
+                            valueFontSize: 17,
+                            width: 110,
+                            borderRadius: 30,
+                            showOnOff: true,
+                            value: calculatorMode.isScoreMode,
+                            activeColor: lapis,
+                            inactiveColor: coral,
+                            onToggle: (value) {
+                              calculatorMode.changeMode();
+                              clearText();
+                            },
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: Colors.white,
+                      )
+                    ],
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: _formVertical,
