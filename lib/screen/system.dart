@@ -5,6 +5,7 @@ import 'package:uni_tool/layout/color.dart';
 import 'package:uni_tool/layout/global.dart';
 import 'package:uni_tool/layout/theme.dart';
 import 'package:uni_tool/provider/get_app_version_provider.dart';
+import 'package:uni_tool/screen/disclaimer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SystemScreen extends ConsumerWidget {
@@ -72,10 +73,34 @@ class SystemScreen extends ConsumerWidget {
                       'プライバシーポリシー',
                       style: TextStyle(color: textColor),
                     ),
-                    trailing: Icon(Icons.arrow_forward_ios_rounded, color: textColor),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: textColor,
+                    ),
                   ),
                   onTap: () {
                     launchPolicyURL(context);
+                  },
+                ),
+                dividerPadding(),
+                InkWell(
+                  splashColor: lightFog,
+                  child: ListTile(
+                    title: Text(
+                      '免責事項',
+                      style: TextStyle(color: textColor),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: textColor,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      createRoute(
+                        DisclaimerScreen(),
+                      ),
+                    );
                   },
                 ),
               ],
@@ -106,7 +131,7 @@ class SystemScreen extends ConsumerWidget {
   }
 
   void launchHowToUseURL(BuildContext context) async {
-    final _url = 'https://zaw.vercel.app/policy';
+    final _url = 'https://www.zaw.icu/blog/uni-tool';
     if (await canLaunch(_url)) {
       await launch(_url);
     } else {
@@ -145,5 +170,23 @@ class SystemScreen extends ConsumerWidget {
         builder: (BuildContext context) {
           return alert;
         });
+  }
+
+  Route createRoute(Widget nextScreen) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => nextScreen,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1, 0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
   }
 }
