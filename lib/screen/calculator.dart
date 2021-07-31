@@ -108,7 +108,6 @@ class calculatorScreen extends ConsumerWidget {
                             inactiveColor: coral,
                             onToggle: (value) {
                               calculatorMode.changeMode();
-                              clearText();
                             },
                           ),
                         ],
