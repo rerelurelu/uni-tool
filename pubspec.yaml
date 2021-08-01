@@ -20,6 +20,7 @@ dependencies:
   flutter_switch: ^0.3.2
   package_info: ^2.0.2
   url_launcher: ^6.0.9
+  flutter_native_splash: ^1.2.0
 
 dev_dependencies:
   flutter_test:
@@ -34,3 +35,7 @@ flutter_icons:
   ios: true
   remove_alpha_ios: true
   image_path: 'assets/images/uoa_icon.png'
+
+flutter_native_splash:
+  image: 'assets/images/splash_icon.png'
+  color: 'FFFFFF'
