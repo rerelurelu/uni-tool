@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../layout/color.dart';
+import 'package:uni_tool/layout/color.dart';
 
 /* Theme Color */
 final ThemeData defaultTheme = ThemeData().copyWith(

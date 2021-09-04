@@ -16,12 +16,12 @@ class SystemScreen extends ConsumerWidget {
     return Container(
       decoration: defaultColor,
       child: ListView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         children: [
           const SizedBox(height: 80),
           Padding(
             padding: const EdgeInsets.only(left: 5),
-            child: Text(
+            child: const Text(
               'アプリについて',
               style: TextStyle(
                 fontSize: 24,
@@ -38,7 +38,7 @@ class SystemScreen extends ConsumerWidget {
                 InkWell(
                   splashColor: lightFog,
                   child: ListTile(
-                    title: Text(
+                    title: const Text(
                       'バージョン',
                       style: TextStyle(color: textColor),
                     ),
@@ -48,15 +48,15 @@ class SystemScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                dividerPadding(),
+                _dividerPadding(),
                 InkWell(
                   splashColor: lightFog,
                   child: ListTile(
-                    title: Text(
+                    title: const Text(
                       'アプリの使い方',
                       style: TextStyle(color: textColor),
                     ),
-                    trailing: Icon(
+                    trailing: const Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: textColor,
                     ),
@@ -65,15 +65,15 @@ class SystemScreen extends ConsumerWidget {
                     launchHowToUseURL(context);
                   },
                 ),
-                dividerPadding(),
+                _dividerPadding(),
                 InkWell(
                   splashColor: lightFog,
                   child: ListTile(
-                    title: Text(
+                    title: const Text(
                       'プライバシーポリシー',
                       style: TextStyle(color: textColor),
                     ),
-                    trailing: Icon(
+                    trailing: const Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: textColor,
                     ),
@@ -82,7 +82,7 @@ class SystemScreen extends ConsumerWidget {
                     launchPolicyURL(context);
                   },
                 ),
-                dividerPadding(),
+                _dividerPadding(),
                 InkWell(
                   splashColor: lightFog,
                   child: ListTile(
@@ -96,7 +96,7 @@ class SystemScreen extends ConsumerWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).push<Object?>(
                       createRoute(
                         DisclaimerScreen(),
                       ),
@@ -111,9 +111,9 @@ class SystemScreen extends ConsumerWidget {
     );
   }
 
-  Widget dividerPadding() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15),
+  Widget _dividerPadding() {
+    return const Padding(
+      padding: EdgeInsets.only(left: 15),
       child: Divider(
         height: 1,
         thickness: 1,
@@ -165,15 +165,15 @@ class SystemScreen extends ConsumerWidget {
       ],
     );
 
-    showDialog(
+    showDialog<AlertDialog>(
         context: context,
         builder: (BuildContext context) {
           return alert;
         });
   }
 
-  Route createRoute(Widget nextScreen) {
-    return PageRouteBuilder(
+  Route<dynamic> createRoute(Widget nextScreen) {
+    return PageRouteBuilder<dynamic>(
       pageBuilder: (context, animation, secondaryAnimation) => nextScreen,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1, 0);
