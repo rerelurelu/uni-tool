@@ -26,11 +26,11 @@ class HomeScreen extends ConsumerWidget {
         initialActiveIndex: pageTransition.currentIndex,
         elevation: 1,
         items: [
-          TabItem(
+          const TabItem<dynamic>(
             icon: Icons.calculate_rounded,
             title: '計算',
           ),
-          TabItem(
+          const TabItem<dynamic>(
             icon: Icons.settings_rounded,
             title: 'システム',
           ),
