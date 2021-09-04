@@ -7,7 +7,7 @@ import 'package:uni_tool/layout/color.dart';
 import 'package:uni_tool/layout/theme.dart';
 import 'package:uni_tool/provider/calculate_provider.dart';
 import 'package:uni_tool/provider/change_mode_provider.dart';
-import '../layout/global.dart';
+import 'package:uni_tool/layout/global.dart';
 
 class calculatorScreen extends ConsumerWidget {
   final FocusNode _textNode1 = FocusNode();
@@ -20,18 +20,21 @@ class calculatorScreen extends ConsumerWidget {
   final TextEditingController intervalController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
 
+
+
   Widget build(BuildContext context, ScopedReader watch) {
-    final double deviceHeight = MediaQuery.of(context).size.height;
-    final double deviceWidth = MediaQuery.of(context).size.width;
+    final double _deviceHeight = MediaQuery.of(context).size.height;
+    final double _deviceWidth = MediaQuery.of(context).size.width;
 
     /* Widget sizes */
-    final double _formVertical = deviceHeight * 0.015;
-    final double _formHorizontal = deviceWidth * 0.08;
+    final double _formVertical = _deviceHeight * 0.015;
+    final double _formHorizontal = _deviceWidth * 0.08;
     final double _btnFontSize = 16;
 
     final double _btnHeight =
-        deviceHeight > deviceWidth ? deviceHeight * 0.06 : deviceHeight * 0.15;
-    final double _btnWidth = deviceHeight > deviceWidth ? deviceWidth * 0.3 : deviceHeight * 0.5;
+        _deviceHeight > _deviceWidth ? _deviceHeight * 0.06 : _deviceHeight * 0.15;
+    final double _btnWidth =
+        _deviceHeight > _deviceWidth ? _deviceWidth * 0.3 : _deviceHeight * 0.5;
 
     /* Providers */
     final calculator = watch(expectedValueProvider);
@@ -40,24 +43,24 @@ class calculatorScreen extends ConsumerWidget {
     return Container(
       decoration: defaultColor,
       child: KeyboardActions(
-        config: _keyboardActionConfig,
-        tapOutsideToDismiss: false,
+        config: _buildConfig(context),
+        tapOutsideBehavior: TapOutsideBehavior.none,
         child: SingleChildScrollView(
           child: Center(
             child: Column(
               children: [
-                SizedBox(height: 100),
+                const SizedBox(height: 100),
                 Container(
                   height: 80,
                   width: 300,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color.fromRGBO(255, 255, 255, .5),
+                    color: const Color.fromRGBO(255, 255, 255, .5),
                   ),
                   child: Center(
                     child: Text(
                       calculator.expectedValue + '％',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: lightTeal,
                         fontSize: 32,
                       ),
@@ -67,7 +70,7 @@ class calculatorScreen extends ConsumerWidget {
                 calculator.hasError
                     ? Column(
                         children: [
-                          SizedBox(height: 25),
+                          const SizedBox(height: 25),
                           Container(
                             child: Text(
                               calculator.errorText,
@@ -78,7 +81,7 @@ class calculatorScreen extends ConsumerWidget {
                           ),
                         ],
                       )
-                    : SizedBox(height: 32),
+                    : const SizedBox(height: 32),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: _formVertical,
@@ -89,9 +92,9 @@ class calculatorScreen extends ConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             '計算モード',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: textColor,
                               fontSize: formFontSize,
                             ),
@@ -112,8 +115,8 @@ class calculatorScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8),
-                      Divider(
+                      const SizedBox(height: 8),
+                      const Divider(
                         height: 1,
                         thickness: 1,
                         color: Colors.white,
@@ -128,12 +131,12 @@ class calculatorScreen extends ConsumerWidget {
                   ),
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: '○秒おきに',
                     ),
                     focusNode: _textNode1,
                     controller: intervalController,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: formTextColor,
                       fontSize: formFontSize,
                     ),
@@ -146,12 +149,12 @@ class calculatorScreen extends ConsumerWidget {
                   ),
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: '○％の確率で',
                     ),
                     focusNode: _textNode2,
                     controller: probController,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: formTextColor,
                       fontSize: formFontSize,
                     ),
@@ -164,12 +167,12 @@ class calculatorScreen extends ConsumerWidget {
                   ),
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: '○秒間',
                     ),
                     focusNode: _textNode3,
                     controller: timeController,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: formTextColor,
                       fontSize: formFontSize,
                     ),
@@ -187,7 +190,7 @@ class calculatorScreen extends ConsumerWidget {
                     ),
                     focusNode: _textNode4,
                     controller: incrController,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: formTextColor,
                       fontSize: formFontSize,
                     ),
@@ -285,10 +288,10 @@ class calculatorScreen extends ConsumerWidget {
     );
   }
 
-  get _keyboardActionConfig {
+  KeyboardActionsConfig _buildConfig(BuildContext context) {
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
-      keyboardSeparatorColor: Color.fromRGBO(255, 255, 255, .3),
+      keyboardSeparatorColor: const Color.fromRGBO(255, 255, 255, .3),
       nextFocus: true,
       actions: [
         KeyboardActionsItem(focusNode: _textNode1),
