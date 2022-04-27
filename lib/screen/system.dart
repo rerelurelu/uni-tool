@@ -122,7 +122,7 @@ class SystemScreen extends ConsumerWidget {
   }
 
   void launchPolicyURL(BuildContext context) async {
-    final _url = 'https://www.zaw.icu/policy';
+    final _url = 'https://www.zoniha.icu/policy';
     if (await canLaunch(_url)) {
       await launch(_url);
     } else {
@@ -131,7 +131,7 @@ class SystemScreen extends ConsumerWidget {
   }
 
   void launchHowToUseURL(BuildContext context) async {
-    final _url = 'https://www.zaw.icu/blog/uni-tool';
+    final _url = 'https://www.zoniha.icu/blog/uni-tool';
     if (await canLaunch(_url)) {
       await launch(_url);
     } else {
