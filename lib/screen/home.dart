@@ -13,8 +13,9 @@ class HomeScreen extends ConsumerWidget {
     SystemScreen(),
   ];
 
-  Widget build(BuildContext context, ScopedReader watch) {
-    final pageTransition = watch(pageTransitionProvider);
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pageTransition = ref.watch(pageTransitionProvider);
 
     return Scaffold(
       body: screens[pageTransition.currentIndex],

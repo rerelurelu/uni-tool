@@ -4,13 +4,8 @@ import 'package:uni_tool/layout/color.dart';
 class DisclaimerScreen extends StatelessWidget {
   DisclaimerScreen({Key? key}) : super(key: key);
 
-  final String _paragraphOne = '''
-    本アプリは公式のものではありません。公式アプリ「櫻坂46・日向坂46UNI'S ON AIR」とは一切関係はありません。
-  ''';
-
-  final String _paragraphTwo = '''
-    本アプリは提供しているデータの信頼性を保証できません。アプリのご利用におけるリスクについて、開発者は一切の責任を負いません。
-  ''';
+  final String _paragraphOne = "本アプリは公式のものではありません。公式アプリ「櫻坂46・日向坂46UNI'S ON AIR」とは一切関係はありません。";
+  final String _paragraphTwo = "本アプリは提供しているデータの信頼性を保証できません。アプリのご利用におけるリスクについて、開発者は一切の責任を負いません。";
 
   final TextStyle _textStyle = TextStyle(fontSize: 16);
 

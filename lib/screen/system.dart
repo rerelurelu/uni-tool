@@ -10,8 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class SystemScreen extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final appVersion = watch(getAppVersionProvider).data?.value;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appVersion = ref.watch(getAppVersionProvider).value;
 
     return Container(
       decoration: defaultColor,
@@ -122,24 +122,24 @@ class SystemScreen extends ConsumerWidget {
   }
 
   void launchPolicyURL(BuildContext context) async {
-    final _url = 'https://www.zoniha.icu/policy';
-    if (await canLaunch(_url)) {
-      await launch(_url);
+    final Uri _url = Uri(scheme: 'https', host: 'www.zoniha.icu', path: 'policy/');
+    if (await canLaunchUrl(_url)) {
+      await launchUrl(_url);
     } else {
-      return showAlertDialog(context, _url);
+      return showAlertDialog(context);
     }
   }
 
   void launchHowToUseURL(BuildContext context) async {
-    final _url = 'https://www.zoniha.icu/blog/uni-tool';
-    if (await canLaunch(_url)) {
-      await launch(_url);
+    final Uri _url = Uri(scheme: 'https', host: 'www.zoniha.icu', path: 'blog/uni-tool/');
+    if (await canLaunchUrl(_url)) {
+      await launchUrl(_url);
     } else {
-      return showAlertDialog(context, _url);
+      return showAlertDialog(context);
     }
   }
 
-  void showAlertDialog(BuildContext context, String url) {
+  void showAlertDialog(BuildContext context) {
     Widget closeButton = TextButton(
       child: Text('閉じる'),
       style: TextButton.styleFrom(
@@ -157,7 +157,7 @@ class SystemScreen extends ConsumerWidget {
         style: TextStyle(fontSize: 24),
       ),
       content: Text(
-        '$url を開けませんでした',
+        'ページを開けませんでした',
         textAlign: TextAlign.center,
       ),
       actions: [
