@@ -20,9 +20,8 @@ class calculatorScreen extends ConsumerWidget {
   final TextEditingController intervalController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
 
-
-
-  Widget build(BuildContext context, ScopedReader watch) {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final double _deviceHeight = MediaQuery.of(context).size.height;
     final double _deviceWidth = MediaQuery.of(context).size.width;
 
@@ -37,8 +36,8 @@ class calculatorScreen extends ConsumerWidget {
         _deviceHeight > _deviceWidth ? _deviceWidth * 0.3 : _deviceHeight * 0.5;
 
     /* Providers */
-    final calculator = watch(expectedValueProvider);
-    final calculatorMode = watch(changeModeProvider);
+    final calculator = ref.watch(expectedValueProvider);
+    final calculatorMode = ref.watch(changeModeProvider);
 
     return Container(
       decoration: defaultColor,
