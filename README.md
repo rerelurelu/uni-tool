@@ -1,16 +1,39 @@
-# uni_tool
+# ゆにつーる
 
-A new Flutter project.
+ゆにつーるはユニゾンエアーの非公式ユーティリティアプリです。 スコアボーナスまたはコンボボーナスのスキルを持つシーンカードの期待値を計算できます。
 
-## Getting Started
+## Setup
 
-This project is a starting point for a Flutter application.
+##### リポジトリをクローン
+```zsh
+git clone https://github.com/zoniha/uni-tool.git
+```
+  ##### プロジェクトフォルダに移動
+```zsh
+cd uni-tool
+```
 
-A few resources to get you started if this is your first Flutter project:
+  ##### アプリの実行
+```zsh
+flutter pub get
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```zsh
+flutter run
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Usage
+
+### 計算モードの切り替え
+
+![toggle image](https://user-images.githubusercontent.com/43092452/183316511-999b1841-841e-4978-9b38-598b76980a63.jpg)
+
+画像内の矢印で示したボタンをタップすることでスコアボーナスとコンボボーナス期待値計算の切り替えができます。
+
+### デモ
+![demo gif](https://user-images.githubusercontent.com/43092452/183316406-a1d03085-faf9-4238-a6a8-c3c641a9168d.gif)
+
+入力欄をタップすると出てくるキーボードの左上にある上下の矢印をタップすることで入力欄の移動ができます。
+
+**Note**
+シーンカードのスキルには「○%の確率で」や「○%アップ」というように、パーセント表記の部分があります。ゆにつーるではパーセント表記の部分は小数に直すことなく入力すると正しく計算できます。例えば、「28％の確率で」という表記なら入力欄には「28」と入力すれば正しく計算ができます。
